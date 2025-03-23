@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^20.9.1",
+    "cheerio": "^1.0.0",
     "express": "^4.21.2",
     "node-fetch": "^3.3.2",
     "ruhend-scraper": "^9.0.1"
