@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Downloader</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+        input { width: 80%; padding: 10px; margin: 10px; font-size: 16px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h2>Enter URL to Download</h2>
+    <input type="text" id="urlInput" placeholder="Enter video URL here..." />
+    <button onclick="downloadMedia()">Download</button>
+
+    <script>
+        function downloadMedia() {
+            const url = document.getElementById("urlInput").value;
+            if (!url) return alert("Please enter a URL!");
+
+            fetch(`/download?url=${encodeURIComponent(url)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const mediaUrl = data.data.url || data.data.video || data.data.audio;
+                        if (mediaUrl) {
+                            window.open(mediaUrl, "_blank");
+                        } else {
+                            alert("Download link not found!");
+                        }
+                    } else {
+                        alert("Error: " + data.error);
+                    }
+                })
+                .catch(err => alert("API Error: " + err.message));
+        }
+    </script>
+
+</body>
+</html>
